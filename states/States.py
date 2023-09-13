@@ -6,6 +6,10 @@ class AuthState(StatesGroup):
     phone_number = State()
     location = State()
 
+class RegistrationStates(StatesGroup):
+    waiting_for_phone_number = State()
+    waiting_for_name = State()
+    waiting_for_location = State()
 
 class OrderCustomState(StatesGroup):
     type = State()
