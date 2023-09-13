@@ -63,3 +63,4 @@ async def process_location(message: types.Message, state: FSMContext):
 
 
 # boldi ishladi
+# boldi ishladi
