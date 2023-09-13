@@ -58,3 +58,8 @@ async def process_location(message: types.Message, state: FSMContext):
 
     # Send confirmation message
     await message.reply("Thank you for registering! You're all set.")
+
+
+
+
+# boldi ishladi
