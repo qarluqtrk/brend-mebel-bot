@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from keyboards.default import reg_key
 from keyboards.default.reg_key import cancel, loc
-from loader import dp, db
+from loader import dp, db1
 from states.States import RegistrationStates
 
 
@@ -45,7 +45,7 @@ async def process_location(message: types.Message, state: FSMContext):
         data['longitude'] = location.longitude
 
     # Retrieve data from state
-    db.add_user(name=data['name'],
+    db1.add_user(name=data['name'],
                 phone_number=data['phone_number'],
                 longitude=data['longitude'],
                 latitude=data['latitude'])

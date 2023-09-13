@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from keyboards.inline.brand_inline_button import main_menu_back, main_brand_inline_button
 from loader import dp, db
@@ -34,9 +35,10 @@ async def about_us(callback: types.CallbackQuery):
 
 
 @dp.message_handler(state=CommentState.comment)
-async def comment(message: types.Message):
+async def comment(message: types.Message, state:FSMContext):
     db.add_comment(comment=message.text,
                    user_id=message.from_user.id
                    )
     await message.answer(text="Fikrlaringiz uchun rahmat ! ",
-                         )
+                         reply_markup=main_menu_back())
+    await state.finish()
