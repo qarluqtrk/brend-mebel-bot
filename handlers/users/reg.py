@@ -45,9 +45,10 @@ async def process_location(message: types.Message, state: FSMContext):
         data['longitude'] = location.longitude
 
     # Retrieve data from state
-    data = await state.get_data()
-    phone_number = data.get('phone_number')
-    name = data.get('name')
+    db.add_user(name=data['name'],
+                phone_number=data['phone_number'],
+                longitude=data['longitude'],
+                latitude=data['latitude'])
 
     # Perform registration logic
     # ...
