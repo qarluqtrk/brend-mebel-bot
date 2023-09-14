@@ -7,6 +7,27 @@ from loader import dp, db1
 from states.States import RegistrationStates
 
 
+
+
+
+def is_authenticated(message: types.Message) -> bool:
+    # Retrieve the user's authentication status from the state (or database/storage)
+    user = db1.get_user(id=message.from_user.id)
+    if user:
+        return True
+    else:
+        # User is not authenticated
+        return False
+
+
+
+
+
+
+
+
+
+
 @dp.message_handler(commands=['reg'])
 async def start(message: types.Message):
     await message.reply("Welcome to the registration process! Please provide your phone number.", reply_markup=reg_key.phone_num())

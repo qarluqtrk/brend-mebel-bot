@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from handlers.users.reg import is_authenticated
 from keyboards.inline.brand_inline_button import main_menu_back, main_brand_inline_button
 from loader import dp, db
 from states.States import CommentState
@@ -9,13 +10,13 @@ from states.States import CommentState
 @dp.callback_query_handler()
 async def about_us(callback: types.CallbackQuery):
     if callback.data == "main_menu":
-        photo_path = "/home/oxunjon/PycharmProjects/brend-mebel-bot/image/brand_mebel.jpg"
+        photo_path = "image/brand_mebel.jpg"
         with open(photo_path, 'rb') as photo_file:
             await callback.message.answer_photo(photo=photo_file,
                                                 reply_markup=main_brand_inline_button())
 
     elif callback.data == "about":
-        photo_path = "/home/oxunjon/PycharmProjects/brend-mebel-bot/image/brand_mebel.jpg"
+        photo_path = "image/brand_mebel.jpg"
         with open(photo_path, 'rb') as photo_file:
             await callback.message.answer_photo(photo=photo_file,
                                                 caption="Lorem Ipsum is simply dummy text of the printing and typesetting "
@@ -28,10 +29,18 @@ async def about_us(callback: types.CallbackQuery):
                                                         "@BrendMebel \n"
                                                         "@Brend_mebelqarshi",
                                                 reply_markup=main_menu_back())
+    elif callback.data == 'register':
+        pass
 
     elif callback.data == "idea":
-        await callback.message.answer(text="<b>O'z fikrlaringizni yozib qodiring !\n</b>")
-        await CommentState.comment.set()
+        user = is_authenticated(message=callback.message)
+        if user == True:
+            await callback.message.answer(text="<b>O'z fikrlaringizni yozib qodiring !\n</b>")
+            await CommentState.comment.set()
+        else:
+
+            await callback.message.answer("You are not authenticated. Please authenticate to continue.", reply_markup=main_brand_inline_button())
+
 
 
 @dp.message_handler(state=CommentState.comment)

@@ -7,7 +7,7 @@ from loader import dp
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
-    photo_path = "/home/oxunjon/PycharmProjects/brend-mebel-bot/image/brand_mebel.jpg"
+    photo_path = "image/brand_mebel.jpg"
     with open(photo_path, 'rb') as photo_file:
         await message.answer_photo(photo=photo_file,
                                    reply_markup=main_brand_inline_button())
