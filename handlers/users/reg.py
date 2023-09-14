@@ -28,11 +28,6 @@ def is_authenticated(message: types.Message) -> bool:
 
 
 
-@dp.message_handler(commands=['reg'])
-async def start(message: types.Message):
-    await message.reply("Welcome to the registration process! Please provide your phone number.", reply_markup=reg_key.phone_num())
-    await RegistrationStates.waiting_for_phone_number.set()
-
 
 @dp.message_handler(state=RegistrationStates.waiting_for_phone_number, content_types=types.ContentType.CONTACT)
 async def process_phone_number(message: types.Message, state: FSMContext):

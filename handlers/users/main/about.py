@@ -2,9 +2,10 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 
 from handlers.users.reg import is_authenticated
+from keyboards.default import reg_key
 from keyboards.inline.brand_inline_button import main_menu_back, main_brand_inline_button
 from loader import dp, db
-from states.States import CommentState
+from states.States import CommentState, RegistrationStates
 
 
 @dp.callback_query_handler()
@@ -29,9 +30,6 @@ async def about_us(callback: types.CallbackQuery):
                                                         "@BrendMebel \n"
                                                         "@Brend_mebelqarshi",
                                                 reply_markup=main_menu_back())
-    elif callback.data == 'register':
-        pass
-
     elif callback.data == "idea":
         user = is_authenticated(message=callback.message)
         if user == True:
@@ -40,6 +38,13 @@ async def about_us(callback: types.CallbackQuery):
         else:
 
             await callback.message.answer("You are not authenticated. Please authenticate to continue.", reply_markup=main_brand_inline_button())
+
+
+
+    elif callback.data == 'register':
+        await callback.message.reply("Welcome to the registration process! Please provide your phone number.",
+                            reply_markup=reg_key.phone_num())
+        await RegistrationStates.waiting_for_phone_number.set()
 
 
 
