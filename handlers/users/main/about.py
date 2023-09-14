@@ -1,9 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from keyboards.default import reg_key
 from keyboards.inline.brand_inline_button import main_menu_back, main_brand_inline_button
 from loader import dp, db
-from states.States import CommentState
+from states.States import CommentState, RegistrationStates
 
 
 @dp.callback_query_handler()
@@ -32,6 +33,11 @@ async def about_us(callback: types.CallbackQuery):
     elif callback.data == "idea":
         await callback.message.answer(text="<b>O'z fikrlaringizni yozib qodiring !\n</b>")
         await CommentState.comment.set()
+
+    elif callback.data == 'register':
+        await callback.message.reply("Welcome to the registration process! Please provide your phone number.",
+                            reply_markup=reg_key.phone_num())
+        await RegistrationStates.waiting_for_phone_number.set()
 
 
 @dp.message_handler(state=CommentState.comment)
